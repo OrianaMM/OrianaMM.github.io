@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press-On Nails Customizer - Claves por Catálogo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#e5e5e5] min-h-screen text-gray-800 font-sans">
+
+    <header class="bg-white shadow-sm p-4 border-b border-pink-200 flex flex-col justify-center items-center">
+        <h1><img src="Black_and_Purple_Illustrative_Beauty_and_Nail_Art_Studio_Logo-removebg-preview.png" width="200"></h1>
+        <p class="text-xs text-gray-500 uppercase mt-1">E-Commerce Nail Art Studio</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+        
+        <section class="bg-white p-6 rounded-2xl shadow-md border border-pink-100 flex flex-col justify-between gap-6">
+            <div>
+                <h2 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">1. Personalizá tu Set</h2>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Forma de la Uña</label>
+                    <select id="forma" class="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400" onchange="actualizarSimulador()">
+                        <option value="ALM">Almendra (Almond)</option>
+                        <option value="COF">Coffin</option>
+                        <option value="STI">Stiletto</option>
+                        <option value="CUA">Cuadrada (Square)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Largo</label>
+                    <select id="largo" class="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400" onchange="actualizarSimulador()">
+                        <option value="CO">Corto (Natural)</option>
+                        <option value="ME">Medio (Intermedio)</option>
+                        <option value="LA">Largo (Llamativo)</option>
+                        <option value="XL">Extra Largo (XL)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Color / Efecto Base</label>
+                    <select id="estilo" class="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400" onchange="actualizarSimulador()">
+                        <option value="01" data-nombre="Nude Clásico" data-color="#ca8051">01 - Nude Clásico</option>
+                        <option value="02" data-nombre="Milky White" data-color="#f8fafc">02 - Milky White</option>
+                        <option value="03" data-nombre="Glitter Lila" data-color="#c872e6">03 - Glitter Lila</option>
+                        <option value="04" data-nombre="Negro Total" data-color="#1e293b">04 - Negro Total</option>
+                    </select>
+                </div>
+
+                <div class="bg-[#e5e5e5] p-4 rounded-xl border border-pink-200 mb-4">
+                    <h3 class="text-sm font-bold text-[#c872e6] uppercase tracking-wider mb-2">📸 Foto de Medición</h3>
+                    <p class="text-xs text-gray-600 mb-3">
+                        Colocá cada uno de tus dedos al lado de una **moneda de 10 pesos**. Sacá la foto derecho desde arriba.
+                    </p>
+                    <input type="file" id="foto_sizing" accept="image/*" class="block w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#c872e6] file:text-white hover:file:bg-pink-700 cursor-pointer" onchange="actualizarSimulador()">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Detalles Extra</label>
+                    <textarea id="detalles" rows="2" placeholder="Notas..." class="w-full p-2 bg-gray-50 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-400"></textarea>
+                </div>
+            </div>
+
+            <button onclick="simularPedido()" class="w-full bg-[#c872e6] hover:bg-pink-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md">
+                Agregar al Carrito
+            </button>
+        </section>
+
+        <section class="flex flex-col gap-6">
+            
+            <div class="bg-white p-6 rounded-2xl shadow-md border border-[#c872e6] text-center">
+                <h2 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">Vista Previa Interactiva</h2>
+                <div class="flex justify-center items-end gap-3 h-32 bg-[#e5e5e5] rounded-xl p-4 border border-dashed border-[#c872e6]">
+                    <div id="nail-preview" class="w-14 transition-all duration-300 shadow-lg border border-white/40" style="background-color: #fbcfe8; height: 60px; border-radius: 35px 35px 6px 6px;"></div>
+                </div>
+                <p id="preview-text" class="text-xs text-gray-500 mt-3 font-mono">Cargando...</p>
+            </div>
+
+            <div class="bg-slate-900 text-slate-200 p-6 rounded-2xl shadow-md font-mono text-xs flex-1 flex flex-col">
+                <div class="flex justify-between items-center border-b border-slate-750 pb-2 mb-3 text-slate-400">
+                    <span>Estructura de Datos (Clave por Posición de Catálogo)</span>
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                </div>
+                <pre id="json-output" class="overflow-x-auto text-green-400 flex-1">Generando datos...</pre>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function actualizarSimulador() {
+            const forma = document.getElementById('forma').value;
+            const largo = document.getElementById('largo').value;
+            const estiloSelect = document.getElementById('estilo');
+            
+            // Obtenemos los atributos del catálogo
+            const codigoCatalogo = estiloSelect.value; // "01", "02", etc.
+            const nombreColor = estiloSelect.options[estiloSelect.selectedIndex].getAttribute('data-nombre');
+            const colorHex = estiloSelect.options[estiloSelect.selectedIndex].getAttribute('data-color');
+            
+            const nail = document.getElementById('nail-preview');
+            const previewText = document.getElementById('preview-text');
+            const inputFoto = document.getElementById('foto_sizing');
+
+            // Actualizar Interfaz Visual
+            nail.style.backgroundColor = colorHex;
+            
+            let altura = '60px';
+            if(largo === 'ME') altura = '85px';
+            if(largo === 'LA') altura = '110px';
+            if(largo === 'XL') altura = '135px';
+            nail.style.height = altura;
+
+            if(forma === 'ALM') nail.style.borderRadius = "35px 35px 6px 6px";
+            else if(forma === 'COF') nail.style.borderRadius = "12px 12px 2px 2px";
+            else if(forma === 'STI') nail.style.borderRadius = "50% 50% 4px 4px / 100% 100% 4px 4px";
+            else if(forma === 'CUA') nail.style.borderRadius = "4px 4px 4px 4px";
+
+            previewText.innerText = `Código Base: ${codigoCatalogo} | ${forma} | ${largo}`;
+
+            // Generar el JSON simulando la Base de Datos
+            const nombreArchivo = inputFoto.files.length > 0 ? inputFoto.files[0].name : "foto_moneda.jpg";
+            
+            // Construimos la estructura de datos usando tu propuesta de clave numérica
+            const datosConfiguracion = {
+                nombre_diseño: nombreColor,
+                forma_seleccionada: forma,
+                largo_seleccionado: largo,
+                archivo_escala: nombreArchivo,
+                observaciones: document.getElementById('detalles').value || "Ninguna"
+            };
+
+            const registroFinal = {};
+            // Cumpliendo tu idea: La clave principal del objeto ahora es "01", "02", "03", etc.
+            registroFinal[codigoCatalogo] = datosConfiguracion;
+
+            document.getElementById('json-output').textContent = JSON.stringify(registroFinal, null, 4);
+        }
+
+        function simularPedido() {
+            alert("¡Estructura guardada con éxito usando tu lógica de claves numéricas fijas!");
+        }
+
+        actualizarSimulador();
+    </script>
+</body>
+</html>
